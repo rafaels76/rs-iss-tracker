@@ -5,6 +5,11 @@ const issIconDayLight = L.icon({
     iconSize: [50, 50],
     iconAnchor: [25, 25],
   });
+const issIconEclipsed = L.icon({
+    iconUrl: "assets/img/iss-e.png",
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
+  });
 let r = 50;
 const circle = L.circleMarker([0, 0], { radius: r }).addTo(map);
 const marker = L.marker([0, 0], { icon: issIconDayLight }).addTo(map);
@@ -45,6 +50,8 @@ async function getISS() {
         marker.setIcon(issIconEclipsed);
       }
     }
+    document.getElementById('labelLatitude').innerText = latitude;
+    document.getElementById('labelLongitude').innerText = longitude
     if (firstTime) {
       map.setView([latitude, longitude], 4);
       firstTime = false;

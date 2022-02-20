@@ -1,10 +1,13 @@
 #map {
-    height: 800px;
+    height: 100vh;
     z-index: 2;
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    position: relative
+    
   }
   
   #floatingRectangle {
@@ -18,4 +21,23 @@ body {
     background-color: #000;
     color: white;
     padding: 0;
+  }
+
+  #floatingFooter{
+    z-index: 4;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .9);
+    color: white;
+    padding: 2% 2% 0 2%;
+    height: 50px;
+    margin: auto;
+    /* --- */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+  font-family: Courier, monospace;
+  font-smoothing: antialiased;
+  font-size: 14px;
+  color: #4AF626;
+/* --- */
   }
