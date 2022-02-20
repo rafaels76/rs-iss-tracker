@@ -4,7 +4,7 @@ const issIcon = L.icon({
     iconSize: [50, 50],
     iconAnchor: [25, 25],
   });
-let r = 40;
+let r = 50;
 const circle = L.circleMarker([0, 0], { radius: r }).addTo(map);
 const marker = L.marker([0, 0], { icon: issIcon }).addTo(map);
 const url = `https://api.wheretheiss.at/v1/satellites/25544`;
@@ -37,9 +37,8 @@ async function getISS() {
     marker.setLatLng([latitude, longitude]);
     map.setView([latitude, longitude]); //
     if (firstTime) {
-      map.setView([latitude, longitude], 3);
+      map.setView([latitude, longitude], 4);
       firstTime = false;
-      console.log(data);
     }
 }
 

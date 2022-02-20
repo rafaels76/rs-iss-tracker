@@ -1,3 +1,21 @@
 #map {
     height: 800px;
+    z-index: 2;
 }
+
+body {
+    position: relative
+  }
+  
+  #floatingRectangle {
+    z-index: 3;
+    position: fixed;
+    left: 20px;
+    right: 0;
+    top: 100px;
+    height: 302px;
+    width: 480px;
+    background-color: #000;
+    color: white;
+    padding: 0;
+  }
