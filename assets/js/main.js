@@ -46,15 +46,25 @@ async function getISS() {
       currentVisibility = visibility;
       if(visibility == 'daylight'){
         marker.setIcon(issIconDayLight);
+        document.getElementById('labelDayNight').innerText = 'daylight';
       } else {
         marker.setIcon(issIconEclipsed);
+        document.getElementById('labelDayNight').innerText = 'La ISS está a la sombra de la Tierra';
       }
     }
-    document.getElementById('labelLatitude').innerText = latitude;
-    document.getElementById('labelLongitude').innerText = longitude
+    document.getElementById('labelLatitude').innerText = latitude.toFixed(6);
+    document.getElementById('labelLongitude').innerText = longitude.toFixed(6);
+    document.getElementById('labelAltitude').innerText = altitude.toFixed(2);
+    document.getElementById('labelVelocity').innerText = velocity.toFixed(2);
     if (firstTime) {
-      map.setView([latitude, longitude], 4);
+      map.setView([latitude, longitude], 3);
+      currentVisibility = visibility;
       firstTime = false;
+      if(visibility == 'daylight'){
+        document.getElementById('labelDayNight').innerText = 'La ISS está a la luz del día';
+      } else {
+        document.getElementById('labelDayNight').innerText = 'La ISS está a la sombra de la Tierra';
+      }
     }
 }
 
