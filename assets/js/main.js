@@ -1,18 +1,10 @@
 var map = L.map("map").setView([0, 09], 2);
 var currentVisibility = '';
-const issIconDayLight = L.icon({
-    iconUrl: "assets/img/iss.png",
-    iconSize: [50, 50],
-    iconAnchor: [25, 25],
-  });
-const issIconEclipsed = L.icon({
-    iconUrl: "assets/img/iss-e.png",
-    iconSize: [50, 50],
-    iconAnchor: [25, 25],
-  });
-let r = 50;
-const circle = L.circleMarker([0, 0], { radius: r }).addTo(map);
-const marker = L.marker([0, 0], { icon: issIconDayLight }).addTo(map);
+const issIconDayLight = L.icon({iconUrl: "assets/img/iss.png", iconSize: [50, 50], iconAnchor: [25, 25]});
+const issIconEclipsed = L.icon({iconUrl: "assets/img/iss-e.png", iconSize: [50, 50], iconAnchor: [25, 25] });
+
+const issRadious = L.circle([0,0], 2200e3, {color: "#19630a", opacity: 0.3, weight:1, fillColor: "#19630a", fillOpacity: 0.1}).addTo(map); 
+const issMarker = L.marker([0, 0], { icon: issIconDayLight }).addTo(map);
 const url = `https://api.wheretheiss.at/v1/satellites/25544`;
 let firstTime = true;
 
@@ -37,35 +29,41 @@ L.tileLayer(
 async function getISS() {
     const response = await fetch(url);
     const data = await response.json();
-    //console.log(data);
+    
     const { altitude, latitude, longitude, velocity, visibility } = data;
-    circle.setLatLng([latitude, longitude]);
-    marker.setLatLng([latitude, longitude]);
-    map.setView([latitude, longitude]); //
-    if(currentVisibility != visibility){
-      currentVisibility = visibility;
-      if(visibility == 'daylight'){
-        marker.setIcon(issIconDayLight);
-        document.getElementById('labelDayNight').innerText = 'daylight';
-      } else {
-        marker.setIcon(issIconEclipsed);
-        document.getElementById('labelDayNight').innerText = 'La ISS está a la sombra de la Tierra';
-      }
-    }
-    document.getElementById('labelLatitude').innerText = latitude.toFixed(6);
-    document.getElementById('labelLongitude').innerText = longitude.toFixed(6);
-    document.getElementById('labelAltitude').innerText = altitude.toFixed(2);
-    document.getElementById('labelVelocity').innerText = velocity.toFixed(2);
+    issRadious.setLatLng([latitude, longitude]);
+    issMarker.setLatLng([latitude, longitude]);
+    // Set location of ISS on the map
+    map.setView([latitude, longitude]);
+    // Check if is the first load of the page
     if (firstTime) {
       map.setView([latitude, longitude], 3);
       currentVisibility = visibility;
       firstTime = false;
       if(visibility == 'daylight'){
+        issMarker.setIcon(issIconDayLight);
         document.getElementById('labelDayNight').innerText = 'La ISS está a la luz del día';
       } else {
+        issMarker.setIcon(issIconEclipsed);
         document.getElementById('labelDayNight').innerText = 'La ISS está a la sombra de la Tierra';
       }
     }
+    //Put light or dark icon depending on daylight
+    if(currentVisibility != visibility){
+      currentVisibility = visibility;
+      if(visibility == 'daylight'){
+        issMarker.setIcon(issIconDayLight);
+        document.getElementById('labelDayNight').innerText = 'La ISS está a la luz del día';
+      } else {
+        issMarker.setIcon(issIconEclipsed);
+        document.getElementById('labelDayNight').innerText = 'La ISS está a la sombra de la Tierra';
+      }
+    }
+    // Refresh the labels
+    document.getElementById('labelLatitude').innerText = latitude.toFixed(6);
+    document.getElementById('labelLongitude').innerText = longitude.toFixed(6);
+    document.getElementById('labelAltitude').innerText = altitude.toFixed(2);
+    document.getElementById('labelVelocity').innerText = velocity.toFixed(2);
 }
 
 getISS();
