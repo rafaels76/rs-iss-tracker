@@ -27,9 +27,10 @@ body {
 
   .labelTexto{
     /* efecto texto */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 1);
     font-size: 14px;
     color: #ffffff;
+
   }
   
   #floatingRectangle {
@@ -52,7 +53,4 @@ body {
     width: 100%;
     background-color: rgba(0, 0, 0, .9);
     color: white;
-    padding: 2% 2% 0 2%;
-    height: 50px;
-    margin: auto;
   }
